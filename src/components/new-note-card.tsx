@@ -3,7 +3,11 @@ import { X } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { toast } from "sonner";
 
-export function NewNoteCard() {
+interface NewNoteCardProps{
+  onNoteCreated: (content: string) => void 
+}
+
+export function NewNoteCard({onNoteCreated}: NewNoteCardProps) {
   const [shouldShowOnboarding, setShouldShowOnboarding] = useState(true);
   const [contentByUser, setContentByUser] = useState('');
 
@@ -20,6 +24,8 @@ export function NewNoteCard() {
 
   function handleSaveNote(event: FormEvent){
     event.preventDefault();
+
+    onNoteCreated(contentByUser);
 
     contentByUser != '' ? toast.success('Nota criada com sucesso!') : toast.error('Erro ao salvar nota!');
     
